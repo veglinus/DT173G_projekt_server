@@ -14,6 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function() {
+    return ['text' => 'test endpoint'];
+});
+
+Route::post('testpost', function (Request $request) {
+    $data = $request->all();
+    return response()->json($data);
+});
+
+//Route::apiResource('categories', 'CategoriesController');
+
+/*
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+*/
