@@ -23,7 +23,7 @@ Route::post('testpost', function (Request $request) {
     return response()->json($data);
 });
 
-//Route::apiResource('categories', 'CategoriesController');
+// Route::apiResource('categories', 'CategoriesController');
 
 /*
 Route::middleware('auth:api')->get('/user', function (Request $request) {

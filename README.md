@@ -11,6 +11,19 @@ Laravel hämtar information ifrån en MySQL databas.
 * [ ] Få ut data via API
 * [ ] Fixa authentication för att kunna administrera inlägg
 * [ ] Administration av inlägg
+* [ ]
+
+## Running
+
+```
+php artisan migrate
+php artisan db:seed
+php artisan serve
+```
+Migrate skapar databasens tabeller. Seed fyller tabellerna med standarddata.
+Serve kör en webbserver.
+
+```php artisan migrate:fresh``` deletes DB and recreates it
 
 ## Development notes
 

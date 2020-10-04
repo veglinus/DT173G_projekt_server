@@ -13,8 +13,9 @@ class CoursesTable extends Migration
      */
     public function up()
     {
-        Schema::create('courses', function (Bluepring $table) {
-            $table->id();
+        Schema::create('courses', function (Blueprint $table) {
+            $table->string('id');
+            $table->primary('id');
             $table->string('name');
             $table->string('progression');
             $table->string('syllabus');
@@ -28,6 +29,6 @@ class CoursesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('courses');
+        Schema::dropIfExists('courses');
     }
 }
