@@ -23,6 +23,22 @@ Route::post('testpost', function (Request $request) {
     return response()->json($data);
 });
 
+
+Route::get('/courses', function() {
+    $data = DB::table('courses')->get();
+    return $data;
+});
+
+Route::get('/jobs', function() {
+    $data = DB::table('jobs')->get();
+    return $data;
+});
+
+Route::get('/sites', function() {
+    $data = DB::table('sites')->get();
+    return $data;
+});
+
 // Route::apiResource('categories', 'CategoriesController');
 
 /*
