@@ -7,34 +7,38 @@ Laravel hämtar information ifrån en MySQL databas.
 ## Todo
 
 * [X] Skapa tabeller
-* [ ] Fyll tabeller med data
-* [ ] Få ut data via API
+* [ ] Fyll tabeller med data - jobs kvar
+* [X] Få ut data via API
 * [ ] Fixa authentication för att kunna administrera inlägg
 * [ ] Administration av inlägg
 * [ ]
 
 ## Running
 
+Du måste först av allt ha Composer installerat. Installera composer här: https://getcomposer.org/
+
+Starta en MySQL/MariaDB databas på din lokala server med standardport. Om du har några andra settings måste du ändra i .env filen som skapas av composer install. Ändra de settings som börjar med "DB_" till rätt efter du har kört composer install.
+
+Kör följande kommandon i terminalen:
 ```
+composer install
 php artisan migrate
 php artisan db:seed
 php artisan serve
 ```
 Migrate skapar databasens tabeller. Seed fyller tabellerna med standarddata.
-Serve kör en webbserver.
-
-```php artisan migrate:fresh``` deletes DB and recreates it
+Serve kör en webbserver. Du kan även lägga in hela mappen i XAMPP/htdocs och köra den via XAMPP om du hellre vill det, eller direkt i en webbhsot.
 
 ## Development notes
 
+```php artisan route:list``` Visar alla routes som finns tillgängliga
+```php artisan migrate:fresh``` Tar bort databasen och återskapar den
+
+Källor:
 https://laravel.com/docs/8.x/pagination
-
 https://laravel.com/docs/8.x/migrations
-
 https://laravel.com/docs/8.x/seeding
-
 https://medium.com/@tsubasakondo_36683/make-laravel-api-only-2da47a0f92b7
-
 https://github.com/fruitcake/laravel-cors
 
 ## Design

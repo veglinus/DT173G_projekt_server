@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class SitesSeeder extends Seeder
 {
@@ -14,7 +17,6 @@ class SitesSeeder extends Seeder
     public function run()
     {
         DB::table('sites')->insert([
-            //'id' => 'DT003G',
             'name' => 'Vegohjälpen',
             'url' => 'https://vegohjalpen.se',
             'description' => 'En hemsida byggd på Wordpress för att hjälpa människor bli veganer.'
@@ -30,7 +32,7 @@ class SitesSeeder extends Seeder
             'description' => 'Statisk hemsida i HTML och CSS som ser ut som en webbutik för ett fiktivt aktivistföretag.'
         ]);
         DB::table('sites')->insert([
-            'name' => 'linush.com',
+            'name' => 'linush',
             'url' => 'https://linush.com/',
             'description' => 'Gammal CV hemsida byggd på Wordpress. Egetskapat tema.'
         ]);

@@ -18,7 +18,7 @@ class SitesTable extends Migration
             $table->text('name');
             $table->string('url');
             $table->text('description');
-            $table->string('source');
+            $table->string('source')->nullable();
             //$table->timestamps();
         });
     }
