@@ -17,7 +17,8 @@ class JobsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->timestamps();
+            $table->string('startdate');
+            $table->string('enddate');
         });
     }
 

@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,13 +45,13 @@ Route::post('/courses', function(Request $request) {
     $result = DB::table('courses')
     ->insert([ $request->all() ]);
     return $result;
-});
+})->middleware('auth');
 Route::delete('/courses', function(Request $request) {
     $result = DB::table('courses')
     ->where('id', '=', $request->only(['id']))
     ->delete();
     return $result;
-});
+})->middleware('auth');
 Route::put('/courses', function(Request $request) {
     $index = $request->only(['index']);
     $what = $request->only(['what']);
@@ -59,7 +60,8 @@ Route::put('/courses', function(Request $request) {
     ->where('id', '=', $index['index'])
     ->update([$what['what'] => $newvalue['newvalue']]);
     return $result;
-});
+})->middleware('auth');
+
 
 
 /* JOBS */
@@ -73,6 +75,23 @@ Route::post('/jobs', function(Request $request) {
     ->insert([ $request->all() ]);
     return $result;
 });
+Route::delete('/jobs', function(Request $request) {
+    $result = DB::table('jobs')
+    ->where('id', '=', $request->only(['id']))
+    ->delete();
+    return $result;
+});
+Route::put('/jobs', function(Request $request) {
+    $index = $request->only(['index']);
+    $what = $request->only(['what']);
+    $newvalue = $request->only(['newvalue']);
+    $result = DB::table('jobs')
+    ->where('id', '=', $index['index'])
+    ->update([$what['what'] => $newvalue['newvalue']]);
+    return $result;
+});
+
+
 
 /* SITES */
 
@@ -85,9 +104,32 @@ Route::post('/sites', function(Request $request) {
     ->insert([ $request->all() ]);
     return $result;
 });
+Route::delete('/sites', function(Request $request) {
+    $result = DB::table('sites')
+    ->where('id', '=', $request->only(['id']))
+    ->delete();
+    return $result;
+});
+Route::put('/sites', function(Request $request) {
+    $index = $request->only(['index']);
+    $what = $request->only(['what']);
+    $newvalue = $request->only(['newvalue']);
+    $result = DB::table('sites')
+    ->where('id', '=', $index['index'])
+    ->update([$what['what'] => $newvalue['newvalue']]);
+    return $result;
+});
 
 
+function authenticate() {
+    $user = Auth::user();
 
+    if ($user === 'admin') {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 
 /*

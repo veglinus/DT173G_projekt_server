@@ -17,24 +17,22 @@ class JobsSeeder extends Seeder
     public function run()
     {
         DB::table('jobs')->insert([
-            'name' => 'Vegohjälpen',
-            'url' => 'https://vegohjalpen.se',
-            'description' => 'En hemsida byggd på Wordpress för att hjälpa människor bli veganer.'
+            'name' => 'Munkegärdeskolan - Vikarie',
+            'description' => 'Vikarierade som högstadielärare i flera olika ämnen, mest musik.',
+            'startdate' => '2017-08-31',
+            'enddate' => '2018-01-01'
         ]);
         DB::table('jobs')->insert([
-            'name' => 'Receptia',
-            'url' => 'https://linush.com/dt093g/moment4/index.php',
-            'description' => 'Egenskapad CMS i PHP i formen av en receptsida.'
+            'name' => 'Frilans',
+            'description' => 'Frilansar som ljustekniker vid andra liveshower. Driver enskild näringsverksamhet med F-skatt.',
+            'startdate' => '2017-02-09',
+            'enddate' => 'Nuvarande'
         ]);
         DB::table('jobs')->insert([
-            'name' => 'Dandelion Klub',
-            'url' => 'http://studenter.miun.se/~lihv1800/dt163g/moment4/index.html',
-            'description' => 'Statisk hemsida i HTML och CSS som ser ut som en webbutik för ett fiktivt aktivistföretag.'
-        ]);
-        DB::table('jobs')->insert([
-            'name' => 'linush',
-            'url' => 'https://linush.com/',
-            'description' => 'Gammal CV hemsida byggd på Wordpress. Egetskapat tema.'
+            'name' => 'Fängelset - Timanställd',
+            'description' => 'Timanställd och jobbar som ljustekniker på liveshower.',
+            'startdate' => '2018-10-22',
+            'enddate' => 'Nuvarande'
         ]);
     }
 }

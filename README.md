@@ -7,11 +7,10 @@ Laravel hämtar information ifrån en MySQL databas.
 ## Todo
 
 * [X] Skapa tabeller
-* [ ] Fyll tabeller med data - jobs kvar
+* [X] Fyll tabeller med data - jobs kvar
 * [X] Få ut data via API
-* [ ] Fixa authentication för att kunna administrera inlägg
-* [ ] Administration av inlägg
-* [ ]
+* [ ] Fixa authentication i admin-requests
+* [ ] Verufiera att allt funkar på en ny fresh install
 
 ## Running
 
