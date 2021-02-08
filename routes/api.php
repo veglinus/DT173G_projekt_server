@@ -42,17 +42,21 @@ Route::get('/courses', function() {
     return $data;
 });
 Route::post('/courses', function(Request $request) {
+    //$request->offsetUnset('api_token');
+    $data = $request->except('api_token');
     $result = DB::table('courses')
-    ->insert([ $request->all() ]);
+    ->insert([ $data->all() ]);
     return $result;
-})->middleware('specialauth');
+})->middleware('api_token');
 Route::delete('/courses', function(Request $request) {
     $result = DB::table('courses')
     ->where('id', '=', $request->only(['id']))
     ->delete();
     return $result;
-})->middleware('specialauth');
+
+})->middleware('api_token');
 Route::put('/courses', function(Request $request) {
+    $request->offsetUnset('api_token');
     $index = $request->only(['index']);
     $what = $request->only(['what']);
     $newvalue = $request->only(['newvalue']);
@@ -60,7 +64,7 @@ Route::put('/courses', function(Request $request) {
     ->where('id', '=', $index['index'])
     ->update([$what['what'] => $newvalue['newvalue']]);
     return $result;
-})->middleware('specialauth');
+})->middleware('api_token');
 
 
 
@@ -71,17 +75,19 @@ Route::get('/jobs', function() {
     return $data;
 });
 Route::post('/jobs', function(Request $request) {
+    $request->offsetUnset('api_token');
     $result = DB::table('jobs')
     ->insert([ $request->all() ]);
     return $result;
-});
+})->middleware('api_token');
 Route::delete('/jobs', function(Request $request) {
     $result = DB::table('jobs')
     ->where('id', '=', $request->only(['id']))
     ->delete();
     return $result;
-});
+})->middleware('api_token');
 Route::put('/jobs', function(Request $request) {
+    $request->offsetUnset('api_token');
     $index = $request->only(['index']);
     $what = $request->only(['what']);
     $newvalue = $request->only(['newvalue']);
@@ -89,7 +95,7 @@ Route::put('/jobs', function(Request $request) {
     ->where('id', '=', $index['index'])
     ->update([$what['what'] => $newvalue['newvalue']]);
     return $result;
-});
+})->middleware('api_token');
 
 
 
@@ -100,17 +106,19 @@ Route::get('/sites', function() {
     return $data;
 });
 Route::post('/sites', function(Request $request) {
+    $request->offsetUnset('api_token');
     $result = DB::table('sites')
     ->insert([ $request->all() ]);
     return $result;
-});
+})->middleware('api_token');
 Route::delete('/sites', function(Request $request) {
     $result = DB::table('sites')
     ->where('id', '=', $request->only(['id']))
     ->delete();
     return $result;
-});
+})->middleware('api_token');
 Route::put('/sites', function(Request $request) {
+    $request->offsetUnset('api_token');
     $index = $request->only(['index']);
     $what = $request->only(['what']);
     $newvalue = $request->only(['newvalue']);
@@ -122,79 +130,7 @@ Route::put('/sites', function(Request $request) {
 
 
 
-// Taget från https://laravel.com/docs/5.8/authentication och modifierat
-Route::post('logon', function(Request $request) {
-    $credentials = $request->only('email', 'password');
+Route::get('/example/{api_token}', function (Request $request) {
+    return true;
+})->middleware('api_token');
 
-    //return $credentials;
-    
-    if (Auth::check()) {
-        return ['error' => 'You are already logged in!'];
-    } else {
-        if (Auth::attempt($credentials)) { // Correct password
-            error_log($request->email);
-
-            try {
-                //$user = new User;
-                //$user = User::find($request->email)->first();
-
-                $request->session()->put('admin','linus');
-                
-                
-                //error_log();
-                Auth::loginUsingId(1, $remember = true);
-                //session(['user' => $user ]);
-
-            } catch (\Throwable $th) {
-                error_log($th);
-                error_log('end');
-            }
-            /*
-            $request->session()->regenerate();
-            $request->session(['admin' => 'true']);*/
-
-            return [
-                'auth' => 'true'
-            ];
-        } else { // Wrong password
-            return [
-                'auth' => 'false',
-                'email' => 'The provided credentials do not match our records.',
-                'username' => $request->email,
-            ];
-        }
-    }
-});
-
-Route::post('logout', function(Request $request) {
-    Auth::logout();
-    return;
-});
-
-
-Route::get('check', function(Request $request) {
-    if (Auth::check()) {
-        return [
-            'auth' => true
-        ];
-    } else {
-        return [
-            'auth' => false
-        ];
-    }
-});
-
-/*
-Route::middleware('api')->get('/user', function (Request $request) {
-    $credentials = $request->only('email', 'password');
-
-    if (Auth::attempt($credentials)) {
-        $request->session()->regenerate();
-
-        return true;
-    }
-
-    return back()->withErrors([
-        'email' => 'The provided credentials do not match our records.',
-    ]);
-});*/
