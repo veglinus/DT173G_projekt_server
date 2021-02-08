@@ -14,7 +14,7 @@ Laravel hämtar information ifrån en MySQL databas.
 
 ## Running
 
-Du måste först av allt ha Composer installerat. Installera composer här: https://getcomposer.org/
+Installera composer: https://getcomposer.org/
 
 Starta en MySQL/MariaDB databas på din lokala server med standardport. Om du har några andra settings måste du ändra i .env filen som skapas av composer install. Ändra de settings som börjar med "DB_" till rätt efter du har kört composer install.
 
@@ -39,10 +39,6 @@ https://laravel.com/docs/8.x/migrations
 https://laravel.com/docs/8.x/seeding
 https://medium.com/@tsubasakondo_36683/make-laravel-api-only-2da47a0f92b7
 https://github.com/fruitcake/laravel-cors
-
-## Design
-
-DB <-> Laravel <-> Klient
 
 ### DB
 

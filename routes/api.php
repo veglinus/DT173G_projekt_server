@@ -45,13 +45,13 @@ Route::post('/courses', function(Request $request) {
     $result = DB::table('courses')
     ->insert([ $request->all() ]);
     return $result;
-})->middleware('auth');
+})->middleware('specialauth');
 Route::delete('/courses', function(Request $request) {
     $result = DB::table('courses')
     ->where('id', '=', $request->only(['id']))
     ->delete();
     return $result;
-})->middleware('auth');
+})->middleware('specialauth');
 Route::put('/courses', function(Request $request) {
     $index = $request->only(['index']);
     $what = $request->only(['what']);
@@ -60,7 +60,7 @@ Route::put('/courses', function(Request $request) {
     ->where('id', '=', $index['index'])
     ->update([$what['what'] => $newvalue['newvalue']]);
     return $result;
-})->middleware('auth');
+})->middleware('specialauth');
 
 
 
@@ -121,19 +121,80 @@ Route::put('/sites', function(Request $request) {
 });
 
 
-function authenticate() {
-    $user = Auth::user();
 
-    if ($user === 'admin') {
-        return true;
+// Taget från https://laravel.com/docs/5.8/authentication och modifierat
+Route::post('logon', function(Request $request) {
+    $credentials = $request->only('email', 'password');
+
+    //return $credentials;
+    
+    if (Auth::check()) {
+        return ['error' => 'You are already logged in!'];
     } else {
-        return false;
-    }
-}
+        if (Auth::attempt($credentials)) { // Correct password
+            error_log($request->email);
 
+            try {
+                //$user = new User;
+                //$user = User::find($request->email)->first();
+
+                $request->session()->put('admin','linus');
+                
+                
+                //error_log();
+                Auth::loginUsingId(1, $remember = true);
+                //session(['user' => $user ]);
+
+            } catch (\Throwable $th) {
+                error_log($th);
+                error_log('end');
+            }
+            /*
+            $request->session()->regenerate();
+            $request->session(['admin' => 'true']);*/
+
+            return [
+                'auth' => 'true'
+            ];
+        } else { // Wrong password
+            return [
+                'auth' => 'false',
+                'email' => 'The provided credentials do not match our records.',
+                'username' => $request->email,
+            ];
+        }
+    }
+});
+
+Route::post('logout', function(Request $request) {
+    Auth::logout();
+    return;
+});
+
+
+Route::get('check', function(Request $request) {
+    if (Auth::check()) {
+        return [
+            'auth' => true
+        ];
+    } else {
+        return [
+            'auth' => false
+        ];
+    }
+});
 
 /*
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-*/
+Route::middleware('api')->get('/user', function (Request $request) {
+    $credentials = $request->only('email', 'password');
+
+    if (Auth::attempt($credentials)) {
+        $request->session()->regenerate();
+
+        return true;
+    }
+
+    return back()->withErrors([
+        'email' => 'The provided credentials do not match our records.',
+    ]);
+});*/

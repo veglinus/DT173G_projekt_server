@@ -15,6 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('type')->default('default');
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -22,6 +23,15 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        DB::table('users')->insert([
+            [
+                'name' => 'Linus Hvenfelt',
+                'email' => 'admin@linush.com',
+                'password' => bcrypt('QrYDUN3A8At6r7mYmCQw'),
+                'type' => 'admin'
+            ]
+        ]);
     }
 
     /**
