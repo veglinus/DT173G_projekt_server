@@ -43,10 +43,17 @@ Route::get('/courses', function() {
 });
 Route::post('/courses', function(Request $request) {
     //$request->offsetUnset('api_token');
-    $data = $request->except('api_token');
-    $result = DB::table('courses')
-    ->insert([ $data->all() ]);
-    return $result;
+    try {
+        $request->offsetUnset('api_token');
+        //$data = $request->except('api_token');
+        $result = DB::table('courses')
+        ->insert([ $request->all() ]);
+        return $result;
+    } catch (\Throwable $th) {
+        error_log($th);
+        return false;
+    }
+
 })->middleware('api_token');
 Route::delete('/courses', function(Request $request) {
     $result = DB::table('courses')
