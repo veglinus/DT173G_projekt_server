@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function() {
-
     // https://gist.github.com/jeffochoa/540190d881a7e0bc76e9bc234f2c6ff2
     $routes = collect(Route::getRoutes())->map(function ($route) {
         return [
@@ -32,15 +31,13 @@ Route::get('/', function() {
 });
 
 
-// TODO: Separate into controllers
-
-
 /* COURSES */
 
 Route::get('/courses', function() {
     $data = DB::table('courses')->get();
     return $data;
 });
+
 Route::post('/courses', function(Request $request) {
     //$request->offsetUnset('api_token');
     try {
@@ -53,8 +50,8 @@ Route::post('/courses', function(Request $request) {
         error_log($th);
         return false;
     }
-
 })->middleware('api_token');
+
 Route::delete('/courses', function(Request $request) {
     $result = DB::table('courses')
     ->where('id', '=', $request->only(['id']))
@@ -62,6 +59,7 @@ Route::delete('/courses', function(Request $request) {
     return $result;
 
 })->middleware('api_token');
+
 Route::put('/courses', function(Request $request) {
     $request->offsetUnset('api_token');
     $index = $request->only(['index']);
@@ -81,18 +79,28 @@ Route::get('/jobs', function() {
     $data = DB::table('jobs')->get();
     return $data;
 });
+
 Route::post('/jobs', function(Request $request) {
-    $request->offsetUnset('api_token');
-    $result = DB::table('jobs')
-    ->insert([ $request->all() ]);
-    return $result;
+    //$request->offsetUnset('api_token');
+    try {
+        $request->offsetUnset('api_token');
+        //$data = $request->except('api_token');
+        $result = DB::table('jobs')
+        ->insert([ $request->all() ]);
+        return $result;
+    } catch (\Throwable $th) {
+        error_log($th);
+        return false;
+    }
 })->middleware('api_token');
+
 Route::delete('/jobs', function(Request $request) {
     $result = DB::table('jobs')
     ->where('id', '=', $request->only(['id']))
     ->delete();
     return $result;
 })->middleware('api_token');
+
 Route::put('/jobs', function(Request $request) {
     $request->offsetUnset('api_token');
     $index = $request->only(['index']);
@@ -112,18 +120,28 @@ Route::get('/sites', function() {
     $data = DB::table('sites')->get();
     return $data;
 });
+
 Route::post('/sites', function(Request $request) {
-    $request->offsetUnset('api_token');
-    $result = DB::table('sites')
-    ->insert([ $request->all() ]);
-    return $result;
+    //$request->offsetUnset('api_token');
+    try {
+        $request->offsetUnset('api_token');
+        //$data = $request->except('api_token');
+        $result = DB::table('sites')
+        ->insert([ $request->all() ]);
+        return $result;
+    } catch (\Throwable $th) {
+        error_log($th);
+        return false;
+    }
 })->middleware('api_token');
+
 Route::delete('/sites', function(Request $request) {
     $result = DB::table('sites')
     ->where('id', '=', $request->only(['id']))
     ->delete();
     return $result;
 })->middleware('api_token');
+
 Route::put('/sites', function(Request $request) {
     $request->offsetUnset('api_token');
     $index = $request->only(['index']);
@@ -136,8 +154,6 @@ Route::put('/sites', function(Request $request) {
 });
 
 
-
 Route::get('/example/{api_token}', function (Request $request) {
-    return true;
+    return true; // Test API token
 })->middleware('api_token');
-
